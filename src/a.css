@@ -1,0 +1,9 @@
+html {
+  background: green;
+}
+#app {
+  border: 1px solid green;
+  width: 100px;
+  height: 10px;
+  transform: rotate(90deg);
+}
