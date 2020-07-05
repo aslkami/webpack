@@ -1,4 +1,4 @@
-#### 基于 webpack 的 react 多页面
+#### 基于 webpack 的 react 单页面
 
 - [browserslist](https://github.com/browserslist/browserslist) (postcss-loader, autoprefixer 相关)
 - [eslint](https://eslint.org/demo)
