@@ -1,9 +1,14 @@
 const { smart } = require("webpack-merge")
 const baseConfig = require("./webpack.base.js")
 const Webpack = require("webpack")
+const path = require("path")
+const distAbsolutePath = path.resolve(__dirname, "dist")
 
 module.exports = smart(baseConfig, {
   mode: "development",
+  output: {
+    publicPath: "/",
+  },
   devtool: "source-map",
   devServer: {
     port: 3000,
@@ -16,5 +21,8 @@ module.exports = smart(baseConfig, {
   plugins: [
     new Webpack.NamedModulesPlugin(), // 热更新的文件名
     new Webpack.HotModuleReplacementPlugin(), // 热更新插件
+    new Webpack.DllReferencePlugin({
+      manifest: path.resolve(distAbsolutePath, "manifest.json"),
+    }),
   ],
 })

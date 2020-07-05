@@ -12,14 +12,15 @@ const DashboardPlugin = require("webpack-dashboard/plugin") // webpack-dev-serve
 
 const Webpack = require("webpack")
 
-const devMode = process.env.NODE_ENV !== "production"
+const { entry, HtmlPlugins } = require("./webpack.utils")
 
 module.exports = {
   mode: "development", // development production
-  entry: "./src/index.js",
+  entry: entry,
   output: {
-    filename: "[name].bundle.js", // bundle.[hash:8].js
-    path: distAbsolutePath, // 必须是绝对路径
+    filename: "[name].js", // bundle.[hash:8].js
+    path: distAbsolutePath, // 推荐绝对路径
+    // publicPath: devMode ? "/" : "../",
     // chunkFilename: "[name].bundle.js",
   },
   module: {
@@ -66,12 +67,26 @@ module.exports = {
       /*-------------  css 处理 start  ------------*/
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "../../../",
+            },
+          },
+          "css-loader",
+          "postcss-loader",
+        ],
       },
       {
         test: /\.s[ac]ss$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "../../../",
+            },
+          },
           {
             loader: "css-loader",
             options: {
@@ -104,8 +119,8 @@ module.exports = {
           options: {
             limit: 8 * 1024,
             esModule: false,
-            outputPath: "images/", // 打包归类
-            // publicPath: "//fate.com",
+            outputPath: "assets/images/", // 打包归类
+            // publicPath: "../assets/images/",
           },
         },
       },
@@ -122,25 +137,17 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: htmlTemplatePath,
-      minify: {
-        removeAttributeQuotes: true, // 移除属性的引号
-        collapseWhitespace: false, // 文件压缩变成一行
-      },
-      hash: true,
-    }),
+    ...HtmlPlugins,
     new MiniCssExtractPlugin({
-      filename: "css/[name].css",
+      filename: "assets/css/[name].css",
       // filename: "[name].css",
-      chunkFilename: "[id].css",
+      chunkFilename: "assets/css/[id].css",
     }),
     new CopyWebpackPlugin({
       patterns: [
         {
           from: staticPath,
-          to: "assets/",
+          to: "assets/static/",
           force: true,
         },
       ],
@@ -150,9 +157,6 @@ module.exports = {
     }),
     new Webpack.IgnorePlugin(/\.\/locale/, /moment/), // 不打包 moment.js 引入的 locale
     new DashboardPlugin(),
-    // new Webpack.DllReferencePlugin({
-    //   manifest: path.resolve(distAbsolutePath, "manifest.json"),
-    // }),
   ],
   // watch: true,
   // watchOptions: {

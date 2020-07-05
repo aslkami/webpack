@@ -9,7 +9,9 @@
     "build:prod": "webpack --config webpack.prod.js",
     "build:react": "webpack --config webpack.react.js",
     "dev:wd": "webpack-dashboard -- webpack-dev-server --config webpack.dev.js",
-    "build:wd": "webpack-dashboard -- webpack --config webpack.prod.js"
+    "dev:dll": "rm -rf ./dist && npm run build:react && npm run dev",
+    "build:wd": "webpack-dashboard -- webpack --config webpack.prod.js",
+    "build:dll": "rm -rf ./dist && npm run build:react && npm run build:prod"
   },
   "keywords": [],
   "author": "",

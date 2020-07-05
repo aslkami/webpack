@@ -8,6 +8,7 @@
 
 // document.body.appendChild(img)
 
+require("./a.css")
 require("./b.scss")
 
 // console.log(DEV_MODE)
@@ -19,17 +20,17 @@ require("./b.scss")
 // import React from "react"
 // import ReactDom from "react-dom"
 
-// ReactDom.render(<h1>jsx1111</h1>, window.app)
+// ReactDom.render(<h1>jsx122222</h1>, window.app)
 
-let button = document.createElement("button")
-button.innerHTML = "点击"
-button.addEventListener("click", () => {
-  import("./source").then((data) => {
-    console.log(data)
-    console.log(data.default)
-  })
-})
-document.body.appendChild(button)
+// let button = document.createElement("button")
+// button.innerHTML = "点击"
+// button.addEventListener("click", () => {
+//   import("./source").then((data) => {
+//     console.log(data)
+//     console.log(data.default)
+//   })
+// })
+// document.body.appendChild(button)
 
 // import str from "./source"
 // console.log(str)

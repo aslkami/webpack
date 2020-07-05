@@ -9,14 +9,14 @@ module.exports = {
     react: ["react", "react-dom"],
   },
   output: {
-    filename: "_dll_[name].js",
+    filename: "__dll__[name].js",
     path: distPath,
-    library: "_dll_[name]", // 导出文件的变量
+    library: "__dll__[name]", // 导出文件的变量
     libraryTarget: "var", // 打包方式 common.js var this
   },
   plugins: [
     new Webpack.DllPlugin({
-      name: "_dll_[name]", // name === output.filename
+      name: "__dll__[name]", // name === output.filename
       path: path.resolve(distPath, "manifest.json"), // 打包的清单
     }),
   ],

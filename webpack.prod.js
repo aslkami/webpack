@@ -1,12 +1,18 @@
 const { smart } = require("webpack-merge")
+const path = require("path")
 const baseConfig = require("./webpack.base.js")
+const distAbsolutePath = path.resolve(__dirname, "dist")
 
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin") // 压缩 css
 const TerserJSPlugin = require("terser-webpack-plugin") // 压缩 js
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const Webpack = require("webpack")
 
 module.exports = smart(baseConfig, {
   mode: "production",
+  output: {
+    publicPath: "../",
+  },
   optimization: {
     minimizer: [
       new TerserJSPlugin({
@@ -35,5 +41,11 @@ module.exports = smart(baseConfig, {
       },
     },
   },
-  plugins: [new CleanWebpackPlugin()],
+
+  plugins: [
+    // new CleanWebpackPlugin(), // 使用 动态 链接库的化 就不需要这个了
+    new Webpack.DllReferencePlugin({
+      manifest: path.resolve(distAbsolutePath, "manifest.json"),
+    }),
+  ],
 })
