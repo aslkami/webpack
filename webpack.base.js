@@ -161,11 +161,11 @@ module.exports = {
   //   ignored: /node_moudles/,
   // },
 
-  // 解析 第三方包
   resolve: {
-    modules: [path.resolve("node_modules")],
+    modules: [path.resolve("node_modules")], // // 解析 第三方包
     alias: {
-      "@": componentsPath,
+      "@": srcPath,
+      components: componentsPath,
     },
   },
 }
